@@ -17,4 +17,13 @@ for i in radius:
   equation = (a1)*(equationb)
   Mc.append(equation)
 
-print(Mc)        
+print(Mc)     
+
+#The following creates a text file with the calculated masses in
+dmMass = open('dmMass.txt', 'w')
+
+for x in Mc:
+  dmMass.write(str(x))
+  dmMass.write('\n')
+
+dmMass.close()
