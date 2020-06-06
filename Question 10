@@ -5,29 +5,28 @@ import math
 radius = []
 vMass = [] #Empty list for the mass of visible matter
 dmMass = [] #Empty list for the mass of dark matter
-a1 = 1.3876*(10**9)
+combinedMass = []
+a1 = 4394334140
 
+#The following code is for values.txt
 f = open('values.txt', 'r') 
 f.readline()
 
 for line in f: 
   vMass.append(float(line.split('\t')[4]))
   radius.append(float(line.split('\t')[0]))
+  atan = math.atan((float(line.split('\t')[0]))/(1.87))
+  equationb = ((float(line.split('\t')[0]))- ((1.87)*(atan)))
+  equation = (a1)*(((float(line.split('\t')[0]))- ((1.87)*(atan))))
+  dmMass.append((a1)*(((float(line.split('\t')[0]))- ((1.87)*(atan)))))
+  combinedMass.append(((a1)*(((float(line.split('\t')[0]))- ((1.87)*(atan))))) + (float(line.split('\t')[4])))
 
-#The following code is for dmMass
-for i in radius:
-  atan = math.atan(i/(1.87))
-  equationb = i-((1.87)*(atan))
-  equation = (a1)*(equationb)
-  dmMass.append(equation)
 
 x = np.array(radius)
 y = np.array(vMass)
 z = np.array(dmMass)
 
-sum1 = y + z #This is the sum of the mass for visible and dark matter
-
-plt.plot(x,y) #This is the mass of visible matter against the radius
-plt.plot(x,z) #This is the mass of dark matter against the radius
-plt.plot(x,sum1) #This is the combined masses against the radius
+plt.plot(x,y) #This is the mass of visible matter against the radius - blue line
+plt.plot(x,z) #This is the mass of dark matter against the radius - orange
+plt.plot(x,combinedMass) #This is the combined masses against the radius - green
 plt.show()
