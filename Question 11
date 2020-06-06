@@ -1,0 +1,54 @@
+import matplotlib.pyplot as plt 
+import numpy as np
+import math
+
+#Creating empty lists
+velocity = []
+radius = []
+vMass = []
+dmMass = []
+massCombined =[]
+vPredicted = []
+dmPredicted = []
+combinedPredicted = []
+
+
+#constants
+a1 = 4394334140
+G = 4.30*(10**-6)
+
+f = open('values.txt', 'r') 
+f.readline()
+
+for i in radius:
+  atan = math.atan(i/(1.87))
+  equationb = (i - ((1.87)*(atan)))
+  equation = (a1)*(equationb)
+  dmMass = float(equation)
+  dmPredicted.append(((float(G))*(dmMass)/(float(line.split('\t')[0])))**(1/2))
+
+for line in f:
+  atan = math.atan((float(line.split('\t')[0]))/(1.87))
+  equationb = ((float(line.split('\t')[0])) - ((1.87)*(atan)))
+  equation = (a1)*(equationb)
+  dmMass = float(equation)
+  radius.append(float(line.split('\t')[0]))
+  velocity.append(float(line.split('\t')[1]))
+  vMass.append(float(line.split('\t')[4]))
+  vPredicted.append(((float(G))*((float(line.split('\t')[4])))/(float(line.split('\t')[0])))**(1/2))
+  massCombined.append((float(line.split('\t')[4]))+dmMass)
+  combinedPredicted.append(((float(G))*((float(line.split('\t')[4]))+dmMass)/(float(line.split('\t')[0])))**(1/2))
+
+dmMass = np.array(dmMass)
+vMass = np.array(vMass)
+radius = np.array(radius)
+velocity = np.array(velocity)
+vPrecited = np.array(vPredicted)
+massCombined = np.array(massCombined)
+
+plt.plot(radius,velocity) #(blue) velocity against radius
+plt.plot(radius,vPredicted) #(orange) predicted velocity against radius
+plt.plot(radius,combinedPredicted) #(green) sum of dark matter and visible matter predicted velocity against radius
+plt.ylabel('Velocity(km/h)')
+plt.xlabel('Radius (kpc)')
+plt.show()
